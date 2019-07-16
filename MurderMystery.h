@@ -51,7 +51,7 @@ class Case : public CaseStory
 public:
     void setClue(string clue);
     void setSolved(bool solved);
-    string getClue(int clueNum);
+    void printClue(int clueNum);
 };
 
 class Game
