@@ -50,8 +50,12 @@ class Case : public CaseStory
     vector<string> weaponList;
 public:
     void setClue(string clue);
+	void setWeapon(string weapon);
     void setSolved(bool solved);
-    void printClue(int clueNum);
+    void printClue(/*int clueNum*/ );
+	void printWeapon();
+	string getClue(int clueNum);
+	string getWeapon(int weaponNum);
 };
 
 class Game
