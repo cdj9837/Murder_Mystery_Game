@@ -18,6 +18,13 @@ public:
     Menu();
 
     void gamePlay();
+
+    void Background();
+    void Suspects();
+    void EndScreen();
+
+
+
 };
 
 class Person

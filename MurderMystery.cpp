@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Menu::Menu()
+Menu::Menu() //Welcome window in this function
 {
     cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
     cin>>choice;
@@ -22,7 +22,7 @@ Menu::Menu()
         gamePlay();
 }
 
-void Menu :: gamePlay()
+void Menu :: gamePlay() //Rules window in this function
 {
     CaseStory cs;
     cs.setCharacters();
@@ -31,8 +31,10 @@ void Menu :: gamePlay()
     bool solved;
 
     cs.getHowToPlay();
+    //Rules window here
 
     cs.getBackStory();
+    //Backstory();
 
     c1=c1.main_menu_case(c1);
 
@@ -91,6 +93,21 @@ void Menu :: gamePlay()
             life++;
         }
     }
+}
+
+void Menu :: Background()
+{
+    //Background window and functionality
+
+    cs.getBackStory();
+}
+void Menu :: Suspects()
+{
+    //Suspect window and functionality
+}
+void Menu :: EndScreen()
+{
+    //Need end screen window
 }
 
 Case Case::main_menu_case(Case g)
