@@ -7,22 +7,36 @@
 
 using namespace std;
 
-void Game :: setCase(Case c)
+Menu::Menu()
 {
-    start.push_back(c);
-}
-Case Game :: getCase(int caseNum)
-{
-    return start[caseNum];
-}
+  CaseStory::CaseStory cs;
+  Case::Case c1;
+    
+    cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
+    cin>>m1.choice;
 
-int Menu :: getChoice()
-{
-    //Print menu
-    //Set choice = to the case that user chose
-    return choice;
-}
+  if(m1.choice==1)
+  {
+       cout<<"Goodbye!"<<endl;
+       exit(1);
+  }
 
+  else
+  {
+       cout<<"How to Play:"<<endl;
+       //call to CaseStory for getHowToPlay
+       // cs.getHowToPlay();
+
+
+       //call to CaseStory for getBackStory
+       // cs.getBackStory();
+
+       string clue_first = c1.clues[0];
+       string clue_sec = c1.clues[1];       
+
+       
+  }
+}
 
 
 void Case :: setClue(string clue)
@@ -67,15 +81,11 @@ void Case :: printWeapon()
 }
 
 
-
-
-
-
-string CaseStory :: getHowToPlay()
+string CaseStory :: getHowToPlay() //we should have this as a void return type and just have it print how to play when this function is called (BK)
 {
     return howToPlay;
 }
-string CaseStory :: getBackStory()
+string CaseStory :: getBackStory() //we should also have this a void return type and just have it print the back stories (BK)
 {
     return backStory;
 }
