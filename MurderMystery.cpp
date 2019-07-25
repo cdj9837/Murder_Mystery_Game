@@ -212,12 +212,6 @@ Person CaseStory :: getCharacter(int characterNum)
     return characters[characterNum];
 }
 
-Person::Person(string name, string description)
-{
-    this->name = name;
-    alibi = description;
-}
-
 Person::Person(string name)
 {
     this->name=name;

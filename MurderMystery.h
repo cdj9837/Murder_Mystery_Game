@@ -25,7 +25,6 @@ class Person
     string name;
     bool murderer;
  public:
-    Person(string name, string description);
     Person(string name);
     void setMurderer(bool guilty);
     bool getMurderer();
