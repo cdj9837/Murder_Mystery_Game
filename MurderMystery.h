@@ -23,16 +23,12 @@ public:
 class Person
 {
     string name;
-    string alibi;
     bool murderer;
  public:
-    Person(string name, string description);
     Person(string name);
     void setMurderer(bool guilty);
-    void setAlibi(string a);
     bool getMurderer();
     string getName();
-    string getAlibi();
 };
 
 class CaseStory
