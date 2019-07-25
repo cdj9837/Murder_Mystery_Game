@@ -11,11 +11,13 @@ using namespace std;
 
 class Menu
 {
-protected:
     int choice;
 public:
     int getChoice();
     void main_menu_case();
+    string guess_suspect, guess_weapon;
+ public:
+    Menu();
 };
 
 class Person
@@ -24,6 +26,8 @@ class Person
     string alibi;
     bool murderer=false;
 public:
+    bool murderer;
+ public:
     Person(string name, string description);
     Person(string name);
     void setMurderer(bool guilty);
@@ -34,11 +38,11 @@ public:
 
 class CaseStory
 {
-protected:
+ protected:
     string howToPlay;
     string backStory;
     vector<Person> characters;
-public:
+ public:
     string getHowToPlay();
     string getBackStory();
     Person getCharacter(int characterNum);
@@ -49,15 +53,14 @@ class Case : public CaseStory
     vector<string> clues;
     bool solved;
     vector<string> weaponList;
-public:
+ public:
     void setClue(string clue);
-	void setWeapon(string weapon);
+    void setWeapon(string weapon);
     void setSolved(bool solved);
     void printClue(/*int clueNum*/ );
-	void printWeapon();
-	string getClue(int clueNum);
-	string getWeapon(int weaponNum);
+    void printWeapon();
+    string getClue(int clueNum);
+    string getWeapon(int weaponNum);
 };
-
 
 #endif // MURDERMYSTERY_H_INCLUDED
