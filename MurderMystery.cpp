@@ -9,123 +9,99 @@ using namespace std;
 
 Menu::Menu()
 {
-  CaseStory cs;
-  Case c1;
-
     cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
     cin>>choice;
 
-  if(choice==1)
-  {
-       cout<<"Goodbye!"<<endl;
-       exit(1);
-  }
+    if(choice==1)
+    {
+        cout<<"Goodbye!"<<endl;
+        exit(1);
+    }
 
-  else
-  {
-       cout<<"How to Play:"<<endl;
-       //call to CaseStory for getHowToPlay
-       // cs.getHowToPlay();
-
-
-       //call to CaseStory for getBackStory
-       // cs.getBackStory();
-
-       //string clue_first = c1.clues[0];
-       //string clue_sec = c1.clues[1];
-
-        c1.main_menu_case();
-  }
+    else
+        gamePlay();
 }
 
+void Menu :: gamePlay()
+{
+    CaseStory cs;
+    cs.setCharacters();
+    Case c1;
+    int life=0, suspectNum, weaponNum;
+    bool solved;
+    //call to CaseStory for getHowToPlay
+    cs.getHowToPlay();
 
-void Case :: setClue(string clue)
-{
-    clues.push_back(clue);
-}
-void Case :: setWeapon(string weapon)
-{
-    weaponList.push_back(weapon);
-}
+    //call to CaseStory for getBackStory
+    cs.getBackStory();
 
-void Case :: setSolved(bool solved)
-{
-    this->solved = solved;
-}
-string Case :: getClue(int clueNum)
-{
-    return clues[clueNum-1];
-}
+    c1=c1.main_menu_case(c1);
 
-string Case :: getWeapon(int weaponNum)
-{
-    return weaponList[weaponNum-1];
-}
+    string clue_first = c1.getClue(0);
+    string clue_sec = c1.getClue(1);
 
-void Case :: printClue(/*int clueNum*/      )
-{
-	cout<<"1. "<<clues[0]<<endl;
-	cout<<"2. "<<clues[1]<<endl;
-	cout<<"3. "<<clues[2]<<endl;
-	cout<<"4. "<<clues[3]<<endl;
-	cout<<"5. "<<clues[4]<<endl;
-}
+    //cout<<clue_first<<endl;
 
-void Case :: printWeapon()
-{
-	cout<<"1. "<<weaponList[0]<<endl;
-	cout<<"2. "<<weaponList[1]<<endl;
-	cout<<"3. "<<weaponList[2]<<endl;
-	cout<<"4. "<<weaponList[3]<<endl;
-	cout<<"5. "<<weaponList[4]<<endl;
-}
+    while(life<3 && !solved)
+    {
+        cout<<c1.getClue(0)<<endl;
+        cout<<c1.getClue(1)<<endl;
+        cout<<c1.getClue(2)<<endl;
+        cout<<c1.getClue(3)<<endl;
+        cout<<c1.getClue(4)<<endl;
 
+        cout<<"\nCharacter list:"<<endl;
+        for(int i = 0 ; i<5;i++)
+            cout<<i+1<<". "<<cs.getCharacter(i).getName()<<endl;
 
-string CaseStory :: getHowToPlay() //we should have this as a void return type and just have it print how to play when this function is called (BK)
-{
-    return howToPlay;
-}
-string CaseStory :: getBackStory() //we should also have this a void return type and just have it print the back stories (BK)
-{
-    return backStory;
-}
-Person CaseStory :: getCharacter(int characterNum)
-{
-    return characters[characterNum];
-}
+        cout<<"\n\n"<<endl;
+        cout<<"Here are the following weapons that are found at the scene..."<<endl;
+        cout<<"1. "<<c1.getWeapon(0)<<endl;
+        cout<<"2. "<<c1.getWeapon(1)<<endl;
+        cout<<"3. "<<c1.getWeapon(2)<<endl;
+        cout<<"4. "<<c1.getWeapon(3)<<endl;
+        cout<<"5. "<<c1.getWeapon(4)<<endl;
 
+        cout<<"\nwhich suspect do you think is best link to the scene of the crime?"<<endl;
+        cin>>suspectNum;
+        suspectNum=suspectNum-1;
 
-    //Not sure on constructors
-Person::Person(string name, string description)
-{
-    this->name = name;
-    alibi = description;
-}
+        cout<<"\nWhich weapon do you think is best link to the scene of the crime?"<<endl;
+        cin>>weaponNum;
 
-Person::Person(string name)
-{
-    this->name=name;
-}
-void Person :: setMurderer(bool guilty)
-{
-    murderer = guilty;
-}
-bool Person :: getMurderer()
-{
-    return murderer;
-}
-string Person :: getName()
-{
-    return name;
-}
-string Person :: getAlibi()
-{
-    return alibi;
+        string selected_weapon = c1.getWeapon(weaponNum);
+        Person p = cs.getCharacter(suspectNum);
+        bool yes = p.getMurderer();
+
+        if(yes && weaponNum==1)
+        {
+            cout<<"\nYay you Solved it!!!\n"<<endl;
+            solved=true;
+        }
+
+        else if(yes && selected_weapon!="Drill")
+        {
+            cout<<"\nCorrect person wrong weapon\n"<<endl;
+            life++;
+        }
+
+        else if(!yes && selected_weapon=="Drill")
+        {
+            cout<<"\nCorrect weapon wrong person\n"<<endl;
+            life++;
+        }
+
+        else
+        {
+            cout<<"\nKiller still at LARGE!\n"<<endl;
+            life++;
+        }
+    }
 }
 
-void Case::main_menu_case()
+Case Case::main_menu_case(Case g)
 {
-	Case g;
+	//Case g;
 	string weapon1 = "Drill";
 	string weapon2 = "knife";
 	string weapon3 = "Plastic Bag";
@@ -150,47 +126,127 @@ void Case::main_menu_case()
 	g.setClue(clue4);
 	g.setClue(clue5);
 
-	Person Dan("Dan Gillick");
+	return g;
+}
+
+void Case :: setClue(string clue)
+{
+    clues.push_back(clue);
+}
+void Case :: setWeapon(string weapon)
+{
+    weaponList.push_back(weapon);
+}
+
+void Case :: setSolved(bool solved)
+{
+    this->solved = solved;
+}
+string Case :: getClue(int clueNum)
+{
+    return clues[clueNum];
+}
+
+string Case :: getWeapon(int weaponNum)
+{
+    return weaponList[weaponNum];
+}
+
+void CaseStory :: getHowToPlay() //we should have this as a void return type and just have it print how to play when this function is called (BK)
+{
+    ifstream instructions("instructions.txt");
+    string line;
+
+    cout<<"\n\n"<<endl;
+
+    if(!instructions.is_open())
+    {
+        cout<<"Can't open file"<<endl;
+        exit(1);
+    }
+
+    while(!instructions.eof())
+    {
+        getline(instructions, line);
+        cout<<line<<endl;
+    }
+    cout<<"\n\n"<<endl;
+
+}
+void CaseStory :: getBackStory() //we should also have this a void return type and just have it print the back stories (BK)
+{
+    //print casestory
+    ifstream File("backstory.txt");
+    string line;
+
+    if(!File.is_open())
+    {
+        cout<<"Could not open file"<<endl;
+        exit(1);
+    }
+
+    while(!File.eof())
+    {
+        getline(File, line);
+        cout<<line<<endl;
+    }
+}
+
+void CaseStory :: setCharacters()
+{
+    Person Dan("Dan Gillick");
 	Person Johnny("Johnny Tightlips");
 	Person Joey("Joey Calabrese");
 	Person Frank("Frankie Squealer");
 	Person Bridgette("Bridgette Gotti");
 
+	Dan.setMurderer(false);
+	Johnny.setMurderer(false);
+	Joey.setMurderer(false);
 	Frank.setMurderer(true);
+	Bridgette.setMurderer(false);
 
-	int clueNum;
-	int weaponNum;
-
-	cout<<"Here are the following clues that are obtained at the scene..."<<endl<<endl;
-	g.printClue();
-	cout<<endl;
-	cout<<"Here are the following weapons that are found at the scene..."<<endl;
-	g.printWeapon();
-
-	cout<<"\nwhich clue do you think is best link to the scene of the crime?"<<endl;
-	cin>>clueNum;
-
-	cout<<"\nWhich weapon do you think is best link to the scene of the crime?"<<endl;
-	cin>>weaponNum;
-
-	string selected_clue = g.getClue(clueNum);
-
-	string selected_weapon = g.getWeapon(weaponNum);
-
-	if(selected_clue.compare("various drill bits found in Frankie Squealer toolbox, when checking his car") == 0 && selected_weapon.compare("Drill") == 0)
-	{
-		cout<<"YOU SOLVED THE CASE!!"<<"Frankie Squealer is the killer!!"<<"CASE CLOSED"<<endl;
-		//use vector container, characters to fill in name...
-
-		bool solved = true;
-		g.setSolved(solved);
-	}
-
-	else
-	{
-		cout<<"NOPE, those are not the right clue and weapon!! Killer is still at large.. CASE still open"<<endl;
-		bool solved = false;
-		g.setSolved(solved);
-	}
+    characters.push_back(Dan);
+    characters.push_back(Johnny);
+    characters.push_back(Joey);
+    characters.push_back(Frank);
+    characters.push_back(Bridgette);
 }
 
+Person CaseStory :: getCharacter(int characterNum)
+{
+    return characters[characterNum];
+}
+
+Person::Person(string name, string description)
+{
+    this->name = name;
+    alibi = description;
+}
+
+Person::Person(string name)
+{
+    this->name=name;
+}
+void Person :: setMurderer(bool guilty)
+{
+    murderer = guilty;
+}
+
+void Person :: setAlibi(string a)
+{
+    alibi = a;
+}
+
+bool Person :: getMurderer()
+{
+    return murderer;
+}
+string Person :: getName()
+{
+    return name;
+}
+string Person :: getAlibi()
+{
+    return alibi;
+}
