@@ -9,22 +9,23 @@
 
 using namespace std;
 
-
 class Menu
 {
 protected:
     int choice;
 public:
     int getChoice();
+    void main_menu_case();
 };
 
 class Person
 {
     string name;
     string alibi;
-    bool murderer;
+    bool murderer=false;
 public:
     Person(string name, string description);
+    Person(string name);
     void setMurderer(bool guilty);
     bool getMurderer();
     string getName();
@@ -58,12 +59,5 @@ public:
 	string getWeapon(int weaponNum);
 };
 
-class Game
-{
-    vector<Case> start;
-public:
-    void setCase(Case c);
-    Case getCase(int caseNum);
-};
 
 #endif // MURDERMYSTERY_H_INCLUDED
