@@ -9,12 +9,12 @@
 
 using namespace std;
 
-
 class Menu
 {
     int choice;
+public:
+    int getChoice();
     string guess_suspect, guess_weapon;
- public:
     Menu();
 };
 
@@ -25,6 +25,7 @@ class Person
     bool murderer;
  public:
     Person(string name, string description);
+    Person(string name);
     void setMurderer(bool guilty);
     bool getMurderer();
     string getName();
@@ -56,6 +57,7 @@ class Case : public CaseStory
     void printWeapon();
     string getClue(int clueNum);
     string getWeapon(int weaponNum);
+    void main_menu_case();
 };
 
 #endif // MURDERMYSTERY_H_INCLUDED
