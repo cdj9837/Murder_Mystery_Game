@@ -29,18 +29,12 @@ void Menu :: gamePlay()
     Case c1;
     int life=0, suspectNum, weaponNum;
     bool solved;
-    //call to CaseStory for getHowToPlay
+
     cs.getHowToPlay();
 
-    //call to CaseStory for getBackStory
     cs.getBackStory();
 
     c1=c1.main_menu_case(c1);
-
-    string clue_first = c1.getClue(0);
-    string clue_sec = c1.getClue(1);
-
-    //cout<<clue_first<<endl;
 
     while(life<3 && !solved)
     {
@@ -79,13 +73,13 @@ void Menu :: gamePlay()
             solved=true;
         }
 
-        else if(yes && selected_weapon!="Drill")
+        else if(yes && weaponNum!=1)
         {
             cout<<"\nCorrect person wrong weapon\n"<<endl;
             life++;
         }
 
-        else if(!yes && selected_weapon=="Drill")
+        else if(!yes && weaponNum==1)
         {
             cout<<"\nCorrect weapon wrong person\n"<<endl;
             life++;
@@ -228,14 +222,10 @@ Person::Person(string name)
 {
     this->name=name;
 }
+
 void Person :: setMurderer(bool guilty)
 {
     murderer = guilty;
-}
-
-void Person :: setAlibi(string a)
-{
-    alibi = a;
 }
 
 bool Person :: getMurderer()
@@ -245,8 +235,4 @@ bool Person :: getMurderer()
 string Person :: getName()
 {
     return name;
-}
-string Person :: getAlibi()
-{
-    return alibi;
 }
