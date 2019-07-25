@@ -14,9 +14,7 @@ class Menu
     int choice;
 public:
     int getChoice();
-    void main_menu_case();
     string guess_suspect, guess_weapon;
- public:
     Menu();
 };
 
@@ -24,8 +22,6 @@ class Person
 {
     string name;
     string alibi;
-    bool murderer=false;
-public:
     bool murderer;
  public:
     Person(string name, string description);
@@ -61,6 +57,7 @@ class Case : public CaseStory
     void printWeapon();
     string getClue(int clueNum);
     string getWeapon(int weaponNum);
+    void main_menu_case();
 };
 
 #endif // MURDERMYSTERY_H_INCLUDED

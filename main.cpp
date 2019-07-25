@@ -3,6 +3,6 @@
 
 int main ()
 {
-	main_menu_case();
+    Menu m1;
 }
 

@@ -9,13 +9,13 @@ using namespace std;
 
 Menu::Menu()
 {
-  CaseStory::CaseStory cs;
-  Case::Case c1;
-    
-    cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
-    cin>>m1.choice;
+  CaseStory cs;
+  Case c1;
 
-  if(m1.choice==1)
+    cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
+    cin>>choice;
+
+  if(choice==1)
   {
        cout<<"Goodbye!"<<endl;
        exit(1);
@@ -31,10 +31,10 @@ Menu::Menu()
        //call to CaseStory for getBackStory
        // cs.getBackStory();
 
-       string clue_first = c1.clues[0];
-       string clue_sec = c1.clues[1];       
+       //string clue_first = c1.clues[0];
+       //string clue_sec = c1.clues[1];
 
-       
+        c1.main_menu_case();
   }
 }
 
@@ -123,7 +123,7 @@ string Person :: getAlibi()
     return alibi;
 }
 
-void main_menu_case()
+void Case::main_menu_case()
 {
 	Case g;
 	string weapon1 = "Drill";
