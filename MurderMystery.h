@@ -16,6 +16,8 @@ public:
     int getChoice();
     string guess_suspect, guess_weapon;
     Menu();
+
+    void gamePlay();
 };
 
 class Person
@@ -27,6 +29,7 @@ class Person
     Person(string name, string description);
     Person(string name);
     void setMurderer(bool guilty);
+    void setAlibi(string a);
     bool getMurderer();
     string getName();
     string getAlibi();
@@ -39,10 +42,12 @@ class CaseStory
     string backStory;
     vector<Person> characters;
  public:
-    string getHowToPlay();
-    string getBackStory();
+    void getHowToPlay();
+    void getBackStory();
+    void setCharacters();
     Person getCharacter(int characterNum);
 };
+
 
 class Case : public CaseStory
 {
@@ -53,11 +58,9 @@ class Case : public CaseStory
     void setClue(string clue);
     void setWeapon(string weapon);
     void setSolved(bool solved);
-    void printClue(/*int clueNum*/ );
-    void printWeapon();
     string getClue(int clueNum);
     string getWeapon(int weaponNum);
-    void main_menu_case();
+    Case main_menu_case(Case g);
 };
 
 #endif // MURDERMYSTERY_H_INCLUDED
