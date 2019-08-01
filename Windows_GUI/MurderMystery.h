@@ -6,9 +6,26 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <gtkmm.h>
 
 using namespace std;
+
+class Menu
+{
+    int choice;
+public:
+    int getChoice();
+    string guess_suspect, guess_weapon;
+    Menu();
+
+    void gamePlay();
+
+    void Background();
+    void Suspects();
+    void EndScreen();
+
+
+
+};
 
 class Person
 {
@@ -48,48 +65,5 @@ class Case : public CaseStory
     string getWeapon(int weaponNum);
     Case main_menu_case(Case g);
 };
-
-class Menu
-{
-    int choice;
-public:
-    int getChoice();
-    string guess_suspect, guess_weapon;
-    Menu();
-    CaseStory cs;
-    Case c1;
-
-    void gamePlay();
-
-    friend class SuspectWindow;
-};
-
-class SuspectWindow : public Gtk::Window
-{
-protected:
-
-    Gtk::Box box, hello, hello2, center;
-    Gtk::Image suspect, weapons;
-
-    Gtk::Button s1, s2, s3, s4, s5, w1, w2, w3, w4, w5;
-
-    Gtk::Grid sGrid, wGrid;
-
-
-    void onButtonClicked();
-    void onButtonClickedMurder();
-    void onButtonClickedNotMurder();
-
-    void onButtonClickedMurderNotWeapon();
-    void onButtonClickedNotMurderWeapon();
-
-    void onButtonClickedWeapon();
-    void onButtonClickedNotWeapon();
-public:
-    bool solved=false;
-    SuspectWindow(Menu m);
-    virtual ~SuspectWindow();
-};
-
 
 #endif // MURDERMYSTERY_H_INCLUDED

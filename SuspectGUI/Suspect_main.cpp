@@ -1,16 +1,17 @@
-#include "MurderMystery.h"
+#include "Suspect.h"
 #include <gtkmm.h>
 #include <iostream>
 
-int main (int argc, char **argv)
+using namespace std;
+
+int main(int argc, char **argv)
 {
     Gtk::Main app(argc, argv);
-    Menu m1;
-
     int life=0;
     bool s=false;
+    //std::vector<std::string> info={"Bridgette","Dan","Johnny","Frankie","Joey"};
 
-    SuspectWindow window(m1);
+    SuspectWindow window;
     Gtk::Main::run(window);
 
     s=window.solved;
@@ -18,7 +19,7 @@ int main (int argc, char **argv)
 
     if(life<3 && !s)
     {
-        SuspectWindow win(m1);
+        SuspectWindow win;
         Gtk::Main::run(win);
 
         s=win.solved;
@@ -27,12 +28,19 @@ int main (int argc, char **argv)
 
     if(life<3 && !s)
     {
-        SuspectWindow w(m1);
+        SuspectWindow w;
         Gtk::Main::run(w);
 
         s=w.solved;
         life++;
     }
+
+    if(!s)
+        cout<<"Murderer got away"<<endl;
+    else
+        cout<<"SOLVED"<<endl;
+
     return 0;
 }
+
 
