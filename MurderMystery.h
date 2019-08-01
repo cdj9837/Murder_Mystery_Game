@@ -62,7 +62,13 @@ public:
     void gamePlay();
 
     friend class SuspectWindow;
+
     friend class ExampleWindow;
+
+    friend class Background_Window;
+    friend class Exit_Correct;
+    friend class Exit_Incorrect;
+
 };
 
 class SuspectWindow : public Gtk::Window
@@ -92,6 +98,56 @@ public:
     virtual ~SuspectWindow();
 };
 
+class Background_Window: public Gtk::Window
+{
+    public:
+      Background_Window(Menu m);
+      virtual ~Background_Window();
+
+    protected:
+      void background_continue();
+
+      Gtk::Box box;
+      Gtk::Image back_image;
+      Gtk::Button continue_button;
+      Gtk::Label label;
+      Gtk::Label label1;
+
+};
+
+class Exit_Correct: public Gtk::Window
+{
+    public:
+      Exit_Correct(Menu m);
+      virtual ~Exit_Correct();
+
+    protected:
+      void home_page();
+
+      Gtk::Box solved_box;
+      Gtk::Image solved_image;
+      Gtk::Button home_button;
+      Gtk::Label solved_label;
+      Gtk::Label label;
+
+};
+
+class Exit_Incorrect: public Gtk::Window
+{
+    public:
+      Exit_Incorrect(Menu m);
+      virtual ~Exit_Incorrect();
+
+    protected:
+      void home_page();
+
+      Gtk::Box unsolved_box;
+      Gtk::Image unsolved_image;
+      Gtk::Button home_button;
+      Gtk::Label unsolved_label;
+      Gtk::Label label;
+
+};
 
 
 #endif // MURDERMYSTERY_H_INCLUDED
