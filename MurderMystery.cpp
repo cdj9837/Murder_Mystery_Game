@@ -314,3 +314,6 @@ void SuspectWindow::onButtonClickedNotMurderWeapon()
 
     close();
 }
+
+
+

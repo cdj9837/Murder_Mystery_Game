@@ -62,6 +62,7 @@ public:
     void gamePlay();
 
     friend class SuspectWindow;
+    friend class ExampleWindow;
 };
 
 class SuspectWindow : public Gtk::Window
@@ -90,6 +91,7 @@ public:
     SuspectWindow(Menu m);
     virtual ~SuspectWindow();
 };
+
 
 
 #endif // MURDERMYSTERY_H_INCLUDED
