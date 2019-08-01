@@ -7,13 +7,7 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-
-
-Menu::Menu()
-=======
 Menu::Menu() //Welcome window in this function
->>>>>>> master
 {
     cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
     cin>>choice;
@@ -110,27 +104,6 @@ void CaseStory :: getHowToPlay()
         cout<<"Can't open file"<<endl;
         exit(1);
     }
-
-<<<<<<< HEAD
-void CaseStory :: getHowToPlay() 
-{
-    
-     howToPlay="";
-     cout<<howToPlay<<endl;
-}
-void CaseStory :: getBackStory() 
-{
-	
-     backStory="";
-     cout<<backStory<<endl;
-=======
-    while(!instructions.eof())
-    {
-        getline(instructions, line);
-        cout<<line<<endl;
-    }
-    cout<<"\n\n"<<endl;
-
 }
 void CaseStory :: getBackStory()
 {
@@ -170,9 +143,6 @@ void CaseStory :: setCharacters()
     characters.push_back(Johnny);
     characters.push_back(Frank);
     characters.push_back(Joey);
-
-
->>>>>>> master
 }
 
 Person CaseStory :: getCharacter(int characterNum)
@@ -337,5 +307,79 @@ void SuspectWindow::onButtonClickedNotMurderWeapon()
     close();
 }
 
+//welcome window functions
+welcome_window::welcome_window()
+{
+    //set images
+    image.set("image.jpg");
+    image2.set("play1.png");
+    image3.set("cancel.png");
+
+    resize(900,700);     //size of window
+    set_border_width(10); //window border
+    set_position(Gtk::WIN_POS_CENTER); //WINDOW POSITION IN THE CENTER OF SCREEN
+
+
+    set_title("Murder Mystery"); //window title
+
+    //play button
+    play1.set_size_request(80, 32);
+    play1.set_image(image2);
+    play1.signal_clicked().connect(sigc::mem_fun(*this,&welcome_window::PlaySignal));
+
+
+    //exit button
+    exit1.set_size_request(80,32);
+    exit1.set_image(image3);
+    exit1.signal_clicked().connect(sigc::mem_fun(*this,&welcome_window::ExitSignal));
+
+    hbox.pack_start(play1,1,0);
+    hbox2.pack_start(exit1,1,0);
+
+    vbox.pack_start(image);
+    vbox.pack_start(grid);
+    vbox.pack_start(hbox);
+    vbox.pack_start(hbox2);
+    box.pack_start(vbox);
+
+    add(box);
+
+    show_all_children();
+}
+welcome_window::~welcome_window(){}
+void welcome_window::PlaySignal()
+{
+
+    play1.remove();
+    //exit1.remove();
+    vbox.remove(hbox2);
+
+
+    add(main_box);
+    resize(100,600);
+    set_border_width(10);
+    set_position(Gtk::WIN_POS_CENTER); //WINDOW POSITION IN THE CENTER OF SCREEN
+
+
+    Gtk::HBox box;
+
+    image.set("clue.png");
+
+    play1.add_label("Continue");
+
+
+
+    box.pack_start(image);
+    box.pack_start(play1);
+
+    main_box.pack_start(box);
+
+    grid.show_all();
+
+}
+void welcome_window::ExitSignal()
+{
+    exit(0);
+}
 
 
