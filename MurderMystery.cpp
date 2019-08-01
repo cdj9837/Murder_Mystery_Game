@@ -7,39 +7,71 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 
 
 Menu::Menu()
+=======
+Menu::Menu() //Welcome window in this function
+>>>>>>> master
 {
-  CaseStory::CaseStory cs;
-  Case::Case c1;
-    
     cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
-    cin>>m1.choice;
+    cin>>choice;
 
-  if(m1.choice==1)
-  {
-       cout<<"Goodbye!"<<endl;
-       exit(1);
-  }
+    if(choice==1)
+    {
+        cout<<"Goodbye!"<<endl;
+        exit(1);
+    }
 
-  else
-  {
-       cout<<"How to Play:"<<endl;
-       //call to CaseStory for getHowToPlay
-       // cs.getHowToPlay();
-
-
-       //call to CaseStory for getBackStory
-       // cs.getBackStory();
-
-       string clue_first = c1.clues[0];
-       string clue_sec = c1.clues[1];       
-
-       
-  }
+    else
+        gamePlay();
 }
 
+void Menu :: gamePlay() //Rules window in this function
+{
+    cs.setCharacters();
+    int life=0, suspectNum, weaponNum;
+    bool solved;
+
+    cs.getHowToPlay();
+    //Rules window here
+
+    cs.getBackStory();
+    //Backstory();
+
+    c1=c1.main_menu_case(c1);
+}
+
+Case Case::main_menu_case(Case g)
+{
+	//Case g;
+	string weapon1 = "Drill";
+	string weapon2 = "knife";
+	string weapon3 = "Plastic Bag";
+	string weapon4 = "Gun";
+	string weapon5 = "Katana";
+
+	g.setWeapon(weapon1);
+	g.setWeapon(weapon2);
+	g.setWeapon(weapon3);
+	g.setWeapon(weapon4);
+	g.setWeapon(weapon5);
+
+	string clue1 = "Dan Gillick is very thin, and physically weak, his hands are not rough...";
+	string clue2 = "Johnny Tightlips is physically build, his hands are pretty rough as a farmer...";
+	string clue3 = "small traces of blood found on Joey Calabrese shirt cuffs...";
+	string clue4 = "various drill bits found in Frankie Squealer toolbox, when checking his car";
+	string clue5 = "small traces of black carbon found on Bridgette Gotti hands";
+
+	g.setClue(clue1);
+	g.setClue(clue2);
+	g.setClue(clue3);
+	g.setClue(clue4);
+	g.setClue(clue5);
+
+	return g;
+}
 
 void Case :: setClue(string clue)
 {
@@ -56,33 +88,28 @@ void Case :: setSolved(bool solved)
 }
 string Case :: getClue(int clueNum)
 {
-    return clues[clueNum-1];
+    return clues[clueNum];
 }
 
 string Case :: getWeapon(int weaponNum)
 {
-    return weaponList[weaponNum-1];
+    return weaponList[weaponNum];
 }
 
-void Case :: printClue(/*int clueNum*/      )
+void CaseStory :: getHowToPlay() //we should have this as a void return type and just have it print how to play when this function is called (BK)
 {
-	cout<<"1. "<<clues[0]<<endl;
-	cout<<"2. "<<clues[1]<<endl;
-	cout<<"3. "<<clues[2]<<endl;
-	cout<<"4. "<<clues[3]<<endl;
-	cout<<"5. "<<clues[4]<<endl;
-}
+    ifstream instructions("instructions.txt");
+    string line;
 
-void Case :: printWeapon()
-{
-	cout<<"1. "<<weaponList[0]<<endl;
-	cout<<"2. "<<weaponList[1]<<endl;
-	cout<<"3. "<<weaponList[2]<<endl;
-	cout<<"4. "<<weaponList[3]<<endl;
-	cout<<"5. "<<weaponList[4]<<endl;
-}
+    cout<<"\n\n"<<endl;
 
+    if(!instructions.is_open())
+    {
+        cout<<"Can't open file"<<endl;
+        exit(1);
+    }
 
+<<<<<<< HEAD
 void CaseStory :: getHowToPlay() 
 {
     
@@ -94,23 +121,73 @@ void CaseStory :: getBackStory()
 	
      backStory="";
      cout<<backStory<<endl;
+=======
+    while(!instructions.eof())
+    {
+        getline(instructions, line);
+        cout<<line<<endl;
+    }
+    cout<<"\n\n"<<endl;
+
 }
+void CaseStory :: getBackStory() //we should also have this a void return type and just have it print the back stories (BK)
+{
+    //print casestory
+    ifstream File("backstory.txt");
+    string line;
+
+    if(!File.is_open())
+    {
+        cout<<"Could not open file"<<endl;
+        exit(1);
+    }
+
+    while(!File.eof())
+    {
+        getline(File, line);
+        cout<<line<<endl;
+    }
+}
+
+void CaseStory :: setCharacters()
+{
+    Person Bridgette("Bridgette Gotti");
+    Person Dan("Dan Gillick");
+	Person Johnny("Johnny Tightlips");
+	Person Frank("Frankie Squealer");
+	Person Joey("Joey Calabrese");
+
+	Dan.setMurderer(false);
+	Johnny.setMurderer(false);
+	Joey.setMurderer(false);
+	Frank.setMurderer(true);
+	Bridgette.setMurderer(false);
+
+	characters.push_back(Bridgette);
+    characters.push_back(Dan);
+    characters.push_back(Johnny);
+    characters.push_back(Frank);
+    characters.push_back(Joey);
+
+
+>>>>>>> master
+}
+
 Person CaseStory :: getCharacter(int characterNum)
 {
-    return characters[characterNum];
+    return characters[characterNum-1];
 }
 
-
-    //Not sure on constructors
-Person::Person(string name, string description)
+Person::Person(string name)
 {
-    this->name = name;
-    alibi = description;
+    this->name=name;
 }
+
 void Person :: setMurderer(bool guilty)
 {
     murderer = guilty;
 }
+
 bool Person :: getMurderer()
 {
     return murderer;
@@ -119,7 +196,141 @@ string Person :: getName()
 {
     return name;
 }
-string Person :: getAlibi()
+
+SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL), hello(Gtk::ORIENTATION_VERTICAL)
 {
-    return alibi;
+    //resize(1000,1000);
+    set_border_width(10);
+    add(box);
+
+    suspect.set("Suspect.png");
+    box.pack_start(suspect);
+    //box.pack_start(hello);
+
+    s1.add_label(m.cs.getCharacter(1).getName());
+    s1.set_size_request(80,32);
+    sGrid.attach(s1,0,0,1,5);
+    s1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    s2.add_label(m.cs.getCharacter(2).getName());
+    s2.set_size_request(80,32);
+    sGrid.attach(s2,1,0,1,5);
+    s2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    s3.add_label(m.cs.getCharacter(3).getName());
+    s3.set_size_request(80,32);
+    sGrid.attach(s3,2,0,1,5);
+    s3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    s4.add_label(m.cs.getCharacter(4).getName());
+    s4.set_size_request(80,32);
+    sGrid.attach(s4,3,0,1,5);
+    s4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurder));
+
+    s5.add_label(m.cs.getCharacter(5).getName());
+    s5.set_size_request(80,32);
+    sGrid.attach(s5,4,0,1,5);
+    s5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    //nter.set_halign(ALIGN_CENTER);
+    box.pack_start(sGrid);
+    show_all_children();
+
+};
+
+SuspectWindow::~SuspectWindow(){}
+
+void SuspectWindow::onButtonClickedMurder()
+{
+    weapons.set("Weapon.jpg");
+    hello2.pack_start(weapons);
+    box.pack_start(hello2);
+
+    w1.add_label("Drill");
+    wGrid.attach(w1,0,0,1,5);
+    w1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedWeapon));
+
+    w2.add_label("Knife");
+    wGrid.attach(w2,1,0,1,5);
+    w2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    w3.add_label("Plastic Bag");
+    wGrid.attach(w3,2,0,1,5);
+    w3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    w4.add_label("Gun");
+    wGrid.attach(w4,3,0,1,5);
+    w4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    w5.add_label("Katana");
+    wGrid.attach(w5,4,0,1,5);
+    w5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    box.pack_start(wGrid);
+    show_all_children();
+}
+
+void SuspectWindow::onButtonClickedNotMurder()
+{
+    weapons.set("Weapon.jpg");
+    hello2.pack_start(weapons);
+    box.pack_start(hello2);
+
+    w1.add_label("Drill");
+    wGrid.attach(w1,0,0,1,5);
+    w1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurderWeapon));
+
+    w2.add_label("Knife");
+    wGrid.attach(w2,1,0,1,5);
+    w2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    w3.add_label("Plastic Bag");
+    wGrid.attach(w3,2,0,1,5);
+    w3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    w4.add_label("Gun");
+    wGrid.attach(w4,3,0,1,5);
+    w4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    w5.add_label("Katana");
+    wGrid.attach(w5,4,0,1,5);
+    w5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    box.pack_start(wGrid);
+    show_all_children();
+
+}
+
+void SuspectWindow::onButtonClickedWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.run();
+
+    solved=true;
+
+    close();
+}
+void SuspectWindow::onButtonClickedNotWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "NOT SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.run();
+
+    close();
+}
+
+void SuspectWindow::onButtonClickedMurderNotWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "NOT SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("Right Murderer, Wrong Weapon");
+    dialog.run();
+
+    close();
+}
+void SuspectWindow::onButtonClickedNotMurderWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "NOT SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("Wrong Murderer, Right Weapon");
+    dialog.run();
+
+    close();
 }
