@@ -62,9 +62,13 @@ public:
     void gamePlay();
 
     friend class SuspectWindow;
+
+    friend class ExampleWindow;
+
     friend class Background_Window;
     friend class Exit_Correct;
     friend class Exit_Incorrect;
+
 };
 
 class SuspectWindow : public Gtk::Window
@@ -144,5 +148,6 @@ class Exit_Incorrect: public Gtk::Window
       Gtk::Label label;
 
 };
+
 
 #endif // MURDERMYSTERY_H_INCLUDED
