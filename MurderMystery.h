@@ -30,10 +30,7 @@ class CaseStory
  public:
     void getHowToPlay();
     void getBackStory();
-<<<<<<< HEAD
-=======
     void setCharacters();
->>>>>>> master
     Person getCharacter(int characterNum);
 };
 
@@ -71,6 +68,26 @@ public:
     friend class Background_Window;
     friend class Exit_Correct;
     friend class Exit_Incorrect;
+
+};
+
+class welcome_window : public Gtk::Window
+{
+public:
+    welcome_window();
+    virtual      ~welcome_window();
+
+protected:
+    Gtk::Window w;
+    Gtk::Button play1, exit1;
+    Gtk::HBox hbox, hbox2;
+    Gtk::VBox vbox;
+    Gtk::Box box;
+    Gtk::Grid  grid;
+    Gtk::Box main_box;
+    Gtk::Image image,image2,image3;
+    void PlaySignal();
+    void ExitSignal();
 
 };
 
