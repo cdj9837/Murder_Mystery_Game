@@ -19,7 +19,9 @@ Menu::Menu() //Welcome window in this function
     }
 
     else
+    {
         gamePlay();
+    }
 }
 
 void Menu :: gamePlay() //Rules window in this function
@@ -90,7 +92,7 @@ string Case :: getWeapon(int weaponNum)
     return weaponList[weaponNum];
 }
 
-void CaseStory :: getHowToPlay() //we should have this as a void return type and just have it print how to play when this function is called (BK)
+void CaseStory :: getHowToPlay()
 {
     ifstream instructions("instructions.txt");
     string line;
@@ -111,7 +113,7 @@ void CaseStory :: getHowToPlay() //we should have this as a void return type and
     cout<<"\n\n"<<endl;
 
 }
-void CaseStory :: getBackStory() //we should also have this a void return type and just have it print the back stories (BK)
+void CaseStory :: getBackStory()
 {
     //print casestory
     ifstream File("backstory.txt");
