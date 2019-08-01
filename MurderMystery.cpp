@@ -24,9 +24,7 @@ Menu::Menu() //Welcome window in this function
 
 void Menu :: gamePlay() //Rules window in this function
 {
-    CaseStory cs;
     cs.setCharacters();
-    Case c1;
     int life=0, suspectNum, weaponNum;
     bool solved;
 
@@ -37,77 +35,6 @@ void Menu :: gamePlay() //Rules window in this function
     //Backstory();
 
     c1=c1.main_menu_case(c1);
-
-    while(life<3 && !solved)
-    {
-        cout<<c1.getClue(0)<<endl;
-        cout<<c1.getClue(1)<<endl;
-        cout<<c1.getClue(2)<<endl;
-        cout<<c1.getClue(3)<<endl;
-        cout<<c1.getClue(4)<<endl;
-
-        cout<<"\nCharacter list:"<<endl;
-        for(int i = 0 ; i<5;i++)
-            cout<<i+1<<". "<<cs.getCharacter(i).getName()<<endl;
-
-        cout<<"\n\n"<<endl;
-        cout<<"Here are the following weapons that are found at the scene..."<<endl;
-        cout<<"1. "<<c1.getWeapon(0)<<endl;
-        cout<<"2. "<<c1.getWeapon(1)<<endl;
-        cout<<"3. "<<c1.getWeapon(2)<<endl;
-        cout<<"4. "<<c1.getWeapon(3)<<endl;
-        cout<<"5. "<<c1.getWeapon(4)<<endl;
-
-        cout<<"\nwhich suspect do you think is best link to the scene of the crime?"<<endl;
-        cin>>suspectNum;
-        suspectNum=suspectNum-1;
-
-        cout<<"\nWhich weapon do you think is best link to the scene of the crime?"<<endl;
-        cin>>weaponNum;
-
-        string selected_weapon = c1.getWeapon(weaponNum);
-        Person p = cs.getCharacter(suspectNum);
-        bool yes = p.getMurderer();
-
-        if(yes && weaponNum==1)
-        {
-            cout<<"\nYay you Solved it!!!\n"<<endl;
-            solved=true;
-        }
-
-        else if(yes && weaponNum!=1)
-        {
-            cout<<"\nCorrect person wrong weapon\n"<<endl;
-            life++;
-        }
-
-        else if(!yes && weaponNum==1)
-        {
-            cout<<"\nCorrect weapon wrong person\n"<<endl;
-            life++;
-        }
-
-        else
-        {
-            cout<<"\nKiller still at LARGE!\n"<<endl;
-            life++;
-        }
-    }
-}
-
-void Menu :: Background()
-{
-    //Background window and functionality
-
-    cs.getBackStory();
-}
-void Menu :: Suspects()
-{
-    //Suspect window and functionality
-}
-void Menu :: EndScreen()
-{
-    //Need end screen window
 }
 
 Case Case::main_menu_case(Case g)
@@ -205,11 +132,11 @@ void CaseStory :: getBackStory() //we should also have this a void return type a
 
 void CaseStory :: setCharacters()
 {
+    Person Bridgette("Bridgette Gotti");
     Person Dan("Dan Gillick");
 	Person Johnny("Johnny Tightlips");
-	Person Joey("Joey Calabrese");
 	Person Frank("Frankie Squealer");
-	Person Bridgette("Bridgette Gotti");
+	Person Joey("Joey Calabrese");
 
 	Dan.setMurderer(false);
 	Johnny.setMurderer(false);
@@ -217,16 +144,18 @@ void CaseStory :: setCharacters()
 	Frank.setMurderer(true);
 	Bridgette.setMurderer(false);
 
+	characters.push_back(Bridgette);
     characters.push_back(Dan);
     characters.push_back(Johnny);
-    characters.push_back(Joey);
     characters.push_back(Frank);
-    characters.push_back(Bridgette);
+    characters.push_back(Joey);
+
+
 }
 
 Person CaseStory :: getCharacter(int characterNum)
 {
-    return characters[characterNum];
+    return characters[characterNum-1];
 }
 
 Person::Person(string name)
@@ -246,4 +175,142 @@ bool Person :: getMurderer()
 string Person :: getName()
 {
     return name;
+}
+
+SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL), hello(Gtk::ORIENTATION_VERTICAL)
+{
+    //resize(1000,1000);
+    set_border_width(10);
+    add(box);
+
+    suspect.set("Suspect.png");
+    box.pack_start(suspect);
+    //box.pack_start(hello);
+
+    s1.add_label(m.cs.getCharacter(1).getName());
+    s1.set_size_request(80,32);
+    sGrid.attach(s1,0,0,1,5);
+    s1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    s2.add_label(m.cs.getCharacter(2).getName());
+    s2.set_size_request(80,32);
+    sGrid.attach(s2,1,0,1,5);
+    s2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    s3.add_label(m.cs.getCharacter(3).getName());
+    s3.set_size_request(80,32);
+    sGrid.attach(s3,2,0,1,5);
+    s3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    s4.add_label(m.cs.getCharacter(4).getName());
+    s4.set_size_request(80,32);
+    sGrid.attach(s4,3,0,1,5);
+    s4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurder));
+
+    s5.add_label(m.cs.getCharacter(5).getName());
+    s5.set_size_request(80,32);
+    sGrid.attach(s5,4,0,1,5);
+    s5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
+
+    //nter.set_halign(ALIGN_CENTER);
+    box.pack_start(sGrid);
+    show_all_children();
+
+};
+
+SuspectWindow::~SuspectWindow(){}
+
+void SuspectWindow::onButtonClickedMurder()
+{
+    weapons.set("Weapon.jpg");
+    hello2.pack_start(weapons);
+    box.pack_start(hello2);
+
+    w1.add_label("Drill");
+    wGrid.attach(w1,0,0,1,5);
+    w1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedWeapon));
+
+    w2.add_label("Knife");
+    wGrid.attach(w2,1,0,1,5);
+    w2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    w3.add_label("Plastic Bag");
+    wGrid.attach(w3,2,0,1,5);
+    w3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    w4.add_label("Gun");
+    wGrid.attach(w4,3,0,1,5);
+    w4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    w5.add_label("Katana");
+    wGrid.attach(w5,4,0,1,5);
+    w5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
+
+    box.pack_start(wGrid);
+    show_all_children();
+}
+
+void SuspectWindow::onButtonClickedNotMurder()
+{
+    weapons.set("Weapon.jpg");
+    hello2.pack_start(weapons);
+    box.pack_start(hello2);
+
+    w1.add_label("Drill");
+    wGrid.attach(w1,0,0,1,5);
+    w1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurderWeapon));
+
+    w2.add_label("Knife");
+    wGrid.attach(w2,1,0,1,5);
+    w2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    w3.add_label("Plastic Bag");
+    wGrid.attach(w3,2,0,1,5);
+    w3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    w4.add_label("Gun");
+    wGrid.attach(w4,3,0,1,5);
+    w4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    w5.add_label("Katana");
+    wGrid.attach(w5,4,0,1,5);
+    w5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
+
+    box.pack_start(wGrid);
+    show_all_children();
+
+}
+
+void SuspectWindow::onButtonClickedWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.run();
+
+    solved=true;
+
+    close();
+}
+void SuspectWindow::onButtonClickedNotWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "NOT SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.run();
+
+    close();
+}
+
+void SuspectWindow::onButtonClickedMurderNotWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "NOT SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("Right Murderer, Wrong Weapon");
+    dialog.run();
+
+    close();
+}
+void SuspectWindow::onButtonClickedNotMurderWeapon()
+{
+    Gtk::MessageDialog dialog(*this, "NOT SOLVED!", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("Wrong Murderer, Right Weapon");
+    dialog.run();
+
+    close();
 }
