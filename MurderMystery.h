@@ -30,7 +30,10 @@ class CaseStory
  public:
     void getHowToPlay();
     void getBackStory();
+<<<<<<< HEAD
+=======
     void setCharacters();
+>>>>>>> master
     Person getCharacter(int characterNum);
 };
 

@@ -7,7 +7,13 @@
 
 using namespace std;
 
+<<<<<<< HEAD
+
+
+Menu::Menu()
+=======
 Menu::Menu() //Welcome window in this function
+>>>>>>> master
 {
     cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
     cin>>choice;
@@ -105,6 +111,19 @@ void CaseStory :: getHowToPlay()
         exit(1);
     }
 
+<<<<<<< HEAD
+void CaseStory :: getHowToPlay() 
+{
+    
+     howToPlay="";
+     cout<<howToPlay<<endl;
+}
+void CaseStory :: getBackStory() 
+{
+	
+     backStory="";
+     cout<<backStory<<endl;
+=======
     while(!instructions.eof())
     {
         getline(instructions, line);
@@ -153,6 +172,7 @@ void CaseStory :: setCharacters()
     characters.push_back(Joey);
 
 
+>>>>>>> master
 }
 
 Person CaseStory :: getCharacter(int characterNum)
