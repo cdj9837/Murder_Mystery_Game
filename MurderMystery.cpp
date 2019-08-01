@@ -7,6 +7,8 @@
 
 using namespace std;
 
+
+
 Menu::Menu()
 {
   CaseStory::CaseStory cs;
@@ -81,13 +83,17 @@ void Case :: printWeapon()
 }
 
 
-string CaseStory :: getHowToPlay() //we should have this as a void return type and just have it print how to play when this function is called (BK)
+void CaseStory :: getHowToPlay() 
 {
-    return howToPlay;
+    
+     howToPlay="";
+     cout<<howToPlay<<endl;
 }
-string CaseStory :: getBackStory() //we should also have this a void return type and just have it print the back stories (BK)
+void CaseStory :: getBackStory() 
 {
-    return backStory;
+	
+     backStory="";
+     cout<<backStory<<endl;
 }
 Person CaseStory :: getCharacter(int characterNum)
 {

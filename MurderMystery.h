@@ -38,8 +38,8 @@ class CaseStory
     string backStory;
     vector<Person> characters;
  public:
-    string getHowToPlay();
-    string getBackStory();
+    void getHowToPlay();
+    void getBackStory();
     Person getCharacter(int characterNum);
 };
 
