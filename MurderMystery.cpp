@@ -40,11 +40,11 @@ void Menu :: gamePlay() //Rules window in this function
 Case Case::main_menu_case(Case g)
 {
 	//Case g;
-	string weapon1 = "Drill";
-	string weapon2 = "knife";
-	string weapon3 = "Plastic Bag";
-	string weapon4 = "Gun";
-	string weapon5 = "Katana";
+	string weapon1 = "Dagger";
+	string weapon2 = "Lead Pipe";
+	string weapon3 = "Rope";
+	string weapon4 = "Candle Stick";
+	string weapon5 = "Wrench";
 
 	g.setWeapon(weapon1);
 	g.setWeapon(weapon2);
@@ -226,23 +226,23 @@ void SuspectWindow::onButtonClickedMurder()
     hello2.pack_start(weapons);
     box.pack_start(hello2);
 
-    w1.add_label("Drill");
+    w1.add_label("Dagger");
     wGrid.attach(w1,0,0,1,5);
     w1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedWeapon));
 
-    w2.add_label("Knife");
+    w2.add_label("Lead Pipe");
     wGrid.attach(w2,1,0,1,5);
     w2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
 
-    w3.add_label("Plastic Bag");
+    w3.add_label("Rope");
     wGrid.attach(w3,2,0,1,5);
     w3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
 
-    w4.add_label("Gun");
+    w4.add_label("Candle Stick");
     wGrid.attach(w4,3,0,1,5);
     w4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
 
-    w5.add_label("Katana");
+    w5.add_label("Wrench");
     wGrid.attach(w5,4,0,1,5);
     w5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedMurderNotWeapon));
 
