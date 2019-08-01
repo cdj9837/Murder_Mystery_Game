@@ -6,7 +6,7 @@
 class Background_Window: public Gtk::Window
 {
     public:
-      Background_Window();
+      Background_Window(Menu m);
       virtual ~Background_Window();
 
     protected:
@@ -23,7 +23,7 @@ class Background_Window: public Gtk::Window
 class Exit_Correct: public Gtk::Window
 {
     public:
-      Exit_Correct();
+      Exit_Correct(Menu m);
       virtual ~Exit_Correct();
 
     protected:
@@ -40,7 +40,7 @@ class Exit_Correct: public Gtk::Window
 class Exit_Incorrect: public Gtk::Window
 {
     public:
-      Exit_Incorrect();
+      Exit_Incorrect(Menu m);
       virtual ~Exit_Incorrect();
 
     protected:
