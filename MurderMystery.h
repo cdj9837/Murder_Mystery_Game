@@ -28,8 +28,8 @@ class CaseStory
     string backStory;
     vector<Person> characters;
  public:
-    void getHowToPlay();
-    void getBackStory();
+    string getHowToPlay();
+    string getBackStory();
     void setCharacters();
     Person getCharacter(int characterNum);
 };
@@ -62,7 +62,6 @@ public:
     void gamePlay();
 
     friend class SuspectWindow;
-
     friend class ExampleWindow;
 
     friend class Background_Window;
@@ -88,6 +87,26 @@ protected:
     Gtk::Image image,image2,image3;
     void PlaySignal();
     void ExitSignal();
+
+};
+
+class Rules : public Gtk::Window
+{
+public:
+  Rules(Menu m);
+  virtual ~Rules();
+
+protected:
+
+void send_value();
+
+  //Child widgets:
+  Gtk::Box m_HBox;
+  Gtk::Box m_VBox2;
+  Gtk::Entry entry;
+  Gtk::Frame m_Frame_LineWrapped;
+  Gtk::Label m_Label_LineWrapped;
+  Gtk::Button	button_send;
 
 };
 
@@ -121,7 +140,7 @@ public:
 class Background_Window: public Gtk::Window
 {
     public:
-      Background_Window(Menu m);
+      Background_Window();
       virtual ~Background_Window();
 
     protected:
@@ -129,10 +148,10 @@ class Background_Window: public Gtk::Window
 
       Gtk::Box box;
       Gtk::Image back_image;
+
       Gtk::Button continue_button;
       Gtk::Label label;
       Gtk::Label label1;
-
 };
 
 class Exit_Correct: public Gtk::Window
@@ -149,7 +168,6 @@ class Exit_Correct: public Gtk::Window
       Gtk::Button home_button;
       Gtk::Label solved_label;
       Gtk::Label label;
-
 };
 
 class Exit_Incorrect: public Gtk::Window
@@ -166,7 +184,13 @@ class Exit_Incorrect: public Gtk::Window
       Gtk::Button home_button;
       Gtk::Label unsolved_label;
       Gtk::Label label;
+};
 
+class Loop : public Gtk::Window
+{
+public:
+    Loop(Gtk::Main app);
+    virtual ~Loop();
 };
 
 
