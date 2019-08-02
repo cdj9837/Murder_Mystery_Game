@@ -545,6 +545,7 @@ Loop :: Loop(Gtk::Main app)
         {
             CluesWindow c2(m1);
             Gtk::Main::run(c2);
+
             SuspectWindow win(m1);
             Gtk::Main::run(win);
 
