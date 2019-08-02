@@ -9,19 +9,9 @@ using namespace std;
 
 Menu::Menu() //Welcome window in this function
 {
-    cout<<"Welcome Detective!  Enter 1 to exit or 2 to solve murder: "<<flush;
-    cin>>choice;
 
-    if(choice==1)
-    {
-        cout<<"Goodbye!"<<endl;
-        exit(1);
-    }
-
-    else
-    {
         gamePlay();
-    }
+
 }
 
 void Menu :: gamePlay() //Rules window in this function
@@ -30,11 +20,9 @@ void Menu :: gamePlay() //Rules window in this function
     int life=0, suspectNum, weaponNum;
     bool solved;
 
-    cs.getHowToPlay();
-    //Rules window here
+    //cs.getHowToPlay();
 
-    cs.getBackStory();
-    //Backstory();
+    //cs.getBackStory();
 
     c1=c1.main_menu_case(c1);
 }
@@ -92,10 +80,11 @@ string Case :: getWeapon(int weaponNum)
     return weaponList[weaponNum];
 }
 
-void CaseStory :: getHowToPlay()
+string CaseStory :: getHowToPlay()
 {
     ifstream instructions("instructions.txt");
     string line;
+    string ret;
 
     cout<<"\n\n"<<endl;
 
@@ -104,13 +93,19 @@ void CaseStory :: getHowToPlay()
         cout<<"Can't open file"<<endl;
         exit(1);
     }
+    while(!instructions.eof())
+    {
+        getline(instructions, line);
+        ret=ret+line+"\n";
+    }
+    return ret;
 }
 
-void CaseStory :: getBackStory()
+string CaseStory :: getBackStory()
 {
     //print casestory
     ifstream File("backstory.txt");
-    string line;
+    string line, ret;
 
     if(!File.is_open())
     {
@@ -121,8 +116,9 @@ void CaseStory :: getBackStory()
     while(!File.eof())
     {
         getline(File, line);
-        cout<<line<<endl;
+        ret= ret+line+"\n";
     }
+    return ret;
 }
 
 void CaseStory :: setCharacters()
@@ -172,13 +168,11 @@ string Person :: getName()
 
 SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL), hello(Gtk::ORIENTATION_VERTICAL)
 {
-    //resize(1000,1000);
     set_border_width(10);
     add(box);
 
     suspect.set("Suspect.png");
     box.pack_start(suspect);
-    //box.pack_start(hello);
 
     s1.add_label(m.cs.getCharacter(1).getName());
     s1.set_size_request(80,32);
@@ -205,7 +199,6 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL), hello(Gtk
     sGrid.attach(s5,4,0,1,5);
     s5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurder));
 
-    //nter.set_halign(ALIGN_CENTER);
     box.pack_start(sGrid);
     show_all_children();
 
@@ -249,23 +242,23 @@ void SuspectWindow::onButtonClickedNotMurder()
     hello2.pack_start(weapons);
     box.pack_start(hello2);
 
-    w1.add_label("Drill");
+    w1.add_label("Dagger");
     wGrid.attach(w1,0,0,1,5);
     w1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotMurderWeapon));
 
-    w2.add_label("Knife");
+    w2.add_label("Lead Pipe");
     wGrid.attach(w2,1,0,1,5);
     w2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
 
-    w3.add_label("Plastic Bag");
+    w3.add_label("Rope");
     wGrid.attach(w3,2,0,1,5);
     w3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
 
-    w4.add_label("Gun");
+    w4.add_label("Candle Stick");
     wGrid.attach(w4,3,0,1,5);
     w4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
 
-    w5.add_label("Katana");
+    w5.add_label("Wrench");
     wGrid.attach(w5,4,0,1,5);
     w5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onButtonClickedNotWeapon));
 
@@ -276,18 +269,12 @@ void SuspectWindow::onButtonClickedNotMurder()
 
 void SuspectWindow::onButtonClickedWeapon()
 {
-    Gtk::MessageDialog dialog(*this, "SOLVED!", false, Gtk::MESSAGE_INFO);
-    dialog.run();
-
     solved=true;
 
     close();
 }
 void SuspectWindow::onButtonClickedNotWeapon()
 {
-    Gtk::MessageDialog dialog(*this, "NOT SOLVED!", false, Gtk::MESSAGE_INFO);
-    dialog.run();
-
     close();
 }
 
@@ -308,7 +295,6 @@ void SuspectWindow::onButtonClickedNotMurderWeapon()
     close();
 }
 
-<<<<<<< HEAD
 //welcome window functions
 welcome_window::welcome_window()
 {
@@ -317,7 +303,7 @@ welcome_window::welcome_window()
     image2.set("play1.png");
     image3.set("cancel.png");
 
-    resize(900,700);     //size of window
+    resize(800,600);     //size of window
     set_border_width(10); //window border
     set_position(Gtk::WIN_POS_CENTER); //WINDOW POSITION IN THE CENTER OF SCREEN
 
@@ -351,51 +337,28 @@ welcome_window::welcome_window()
 welcome_window::~welcome_window(){}
 void welcome_window::PlaySignal()
 {
-
-    play1.remove();
-    //exit1.remove();
-    vbox.remove(hbox2);
-
-
-    add(main_box);
-    resize(100,600);
-    set_border_width(10);
-    set_position(Gtk::WIN_POS_CENTER); //WINDOW POSITION IN THE CENTER OF SCREEN
-
-
-    Gtk::HBox box;
-
-    image.set("clue.png");
-
-    play1.add_label("Continue");
-
-
-
-    box.pack_start(image);
-    box.pack_start(play1);
-
-    main_box.pack_start(box);
-
-    grid.show_all();
+    hide();
 
 }
 void welcome_window::ExitSignal()
 {
     exit(0);
 }
-=======
-Background_Window::Background_Window(Menu m): box(Gtk::ORIENTATION_VERTICAL)
+Background_Window::Background_Window(): box(Gtk::ORIENTATION_VERTICAL)
 {
-    set_size_request(100,100);
+    //set_size_request(100,100);
+    resize(100,100);
     this->set_border_width(60);
     set_title("Background Information");
 
     add(box);
-
+    Gtk::Frame Frame_LineWrapped;
     //CaseStory cs();
     //cs.getBackStory();
 
-    label.set_text("\nScene Incident Report: You, as a Crime Investigator, arrived at the crime scene (1400 hours) on 123 Bourbon Street. At 1200 hours...(continue printing out the rest)\n");
+    label.set_text("Scene Incident Report: You arrive at the crime scene (1400 hours) \non 123 Bourbon Street. At 1200 hours, the complaintant, Bridgette Gotti, \ncontacted the 911 operator and requested immediate medical assistance upon the \ndiscovery of a deceased individual inside her employers' household. Upon arrival at the crime scene, \nthe homicide unit has detained five suspects, including Ms. Gotti, \nfor interrogation. At 1700 hours, the homicide unit has obtained evidence and clues at the crime scene. \nAt 2100 hours, interrogation of the five suspects were completed."
+
+                   );
     box.pack_start(label);
 
     back_image.set("location.png");
@@ -418,7 +381,7 @@ Background_Window::~Background_Window()
 
 void Background_Window::background_continue()
 {
-    //call to signal_clicked to start Suspects / Weapons window
+    hide();
 }
 
 
@@ -448,12 +411,12 @@ Exit_Correct::Exit_Correct(Menu m): solved_box(Gtk::ORIENTATION_VERTICAL)
 
 Exit_Correct::~Exit_Correct()
 {
-
 }
 
 void Exit_Correct::home_page()
 {
     //call to signal_clicked to welcome menu
+    hide();
 }
 
 
@@ -483,11 +446,100 @@ Exit_Incorrect::Exit_Incorrect(Menu m): unsolved_box(Gtk::ORIENTATION_VERTICAL)
 
 Exit_Incorrect::~Exit_Incorrect()
 {
->>>>>>> master
 
 }
 
 void Exit_Incorrect::home_page()
 {
     //call to signal_clicked to welcome menu
+    hide();
+    //return main();
 }
+
+Rules::Rules(Menu m)
+: m_HBox(Gtk::ORIENTATION_VERTICAL, 5), m_VBox2(Gtk::ORIENTATION_VERTICAL, 5), m_Frame_LineWrapped("***GAME RULES***")
+, button_send("Continue")
+{
+    set_size_request(700, 200);
+    set_title("Mystery Murder Game");
+    set_border_width(5);
+
+    add(m_HBox);
+
+    m_HBox.pack_start(m_VBox2, Gtk::PACK_SHRINK);
+
+    m_Label_LineWrapped.set_text(m.cs.getHowToPlay());
+    m_Label_LineWrapped.set_line_wrap();
+    m_Frame_LineWrapped.add(m_Label_LineWrapped);
+    m_VBox2.pack_start(m_Frame_LineWrapped, Gtk::PACK_SHRINK);
+
+    button_send.signal_clicked().connect(sigc::mem_fun(*this,
+    &Rules::send_value));
+    m_HBox.pack_start(button_send);
+
+    show_all_children();
+}
+
+Rules::~Rules()
+{
+}
+
+void	Rules::send_value()
+{
+	/*std::string	input=entry.get_text();
+	Gtk::MessageDialog dialog (*this, "VOID NO NEW WINDOW ",false,Gtk::MESSAGE_ERROR);
+	dialog.set_secondary_text("NEED TO LINK NEW WINDOW");
+	dialog.run();*/
+
+    hide();
+    Background_Window story;
+    Gtk::Main::run(story);
+}
+
+Loop :: Loop(Gtk::Main app)
+{
+    while(true){
+    Menu m1;
+
+    int life=0;
+    bool s=false;
+
+    welcome_window wind;
+    Gtk::Main::run(wind);
+
+    Rules rules(m1);
+    Gtk::Main::run(rules);
+
+    SuspectWindow window(m1);
+    Gtk::Main::run(window);
+
+    s=window.solved;
+    life++;
+
+    if(life<3 && !s)
+    {
+        SuspectWindow win(m1);
+        Gtk::Main::run(win);
+
+        s=win.solved;
+        life++;
+    }
+
+    if(life<3 && !s)
+    {
+        SuspectWindow w(m1);
+        Gtk::Main::run(w);
+
+        s=w.solved;
+        life++;
+
+        Exit_Incorrect e(m1);
+        Gtk::Main::run(e);
+    }
+    else
+    {
+        Exit_Correct e1(m1);
+        Gtk::Main::run(e1);
+    }}
+}
+Loop :: ~Loop(){}
