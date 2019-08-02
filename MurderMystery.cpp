@@ -9,9 +9,7 @@ using namespace std;
 
 Menu::Menu() //Welcome window in this function
 {
-
         gamePlay();
-
 }
 
 void Menu :: gamePlay() //Rules window in this function
@@ -20,16 +18,11 @@ void Menu :: gamePlay() //Rules window in this function
     int life=0, suspectNum, weaponNum;
     bool solved;
 
-    //cs.getHowToPlay();
-
-    //cs.getBackStory();
-
     c1=c1.main_menu_case(c1);
 }
 
 Case Case::main_menu_case(Case g)
 {
-	//Case g;
 	string weapon1 = "Dagger";
 	string weapon2 = "Lead Pipe";
 	string weapon3 = "Rope";
@@ -166,8 +159,9 @@ string Person :: getName()
     return name;
 }
 
-SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL), hello(Gtk::ORIENTATION_VERTICAL)
+SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 {
+    set_position(Gtk::WIN_POS_CENTER);
     set_border_width(10);
     add(box);
 
@@ -271,7 +265,7 @@ void SuspectWindow::onButtonClickedWeapon()
 {
     solved=true;
 
-    close();
+    hide();
 }
 void SuspectWindow::onButtonClickedNotWeapon()
 {
@@ -307,14 +301,12 @@ welcome_window::welcome_window()
     set_border_width(10); //window border
     set_position(Gtk::WIN_POS_CENTER); //WINDOW POSITION IN THE CENTER OF SCREEN
 
-
     set_title("Murder Mystery"); //window title
 
     //play button
     play1.set_size_request(80, 32);
     play1.set_image(image2);
     play1.signal_clicked().connect(sigc::mem_fun(*this,&welcome_window::PlaySignal));
-
 
     //exit button
     exit1.set_size_request(80,32);
@@ -335,6 +327,7 @@ welcome_window::welcome_window()
     show_all_children();
 }
 welcome_window::~welcome_window(){}
+
 void welcome_window::PlaySignal()
 {
     hide();
@@ -344,21 +337,18 @@ void welcome_window::ExitSignal()
 {
     exit(0);
 }
+
 Background_Window::Background_Window(): box(Gtk::ORIENTATION_VERTICAL)
 {
-    //set_size_request(100,100);
     resize(100,100);
     this->set_border_width(60);
     set_title("Background Information");
+    set_position(Gtk::WIN_POS_CENTER);
 
     add(box);
     Gtk::Frame Frame_LineWrapped;
-    //CaseStory cs();
-    //cs.getBackStory();
 
-    label.set_text("Scene Incident Report: You arrive at the crime scene (1400 hours) \non 123 Bourbon Street. At 1200 hours, the complaintant, Bridgette Gotti, \ncontacted the 911 operator and requested immediate medical assistance upon the \ndiscovery of a deceased individual inside her employers' household. Upon arrival at the crime scene, \nthe homicide unit has detained five suspects, including Ms. Gotti, \nfor interrogation. At 1700 hours, the homicide unit has obtained evidence and clues at the crime scene. \nAt 2100 hours, interrogation of the five suspects were completed."
-
-                   );
+    label.set_text("Scene Incident Report: You arrive at the crime scene (1400 hours) \non 123 Bourbon Street. At 1200 hours, the complaintant, Bridgette Gotti, \ncontacted the 911 operator and requested immediate medical assistance upon the \ndiscovery of a deceased individual inside her employers' household. Upon arrival at the crime scene, \nthe homicide unit has detained five suspects, including Ms. Gotti, \nfor interrogation. At 1700 hours, the homicide unit has obtained evidence and clues at the crime scene. \nAt 2100 hours, interrogation of the five suspects were completed.\n\n");
     box.pack_start(label);
 
     back_image.set("location.png");
@@ -374,10 +364,7 @@ Background_Window::Background_Window(): box(Gtk::ORIENTATION_VERTICAL)
     show_all_children();
 }
 
-Background_Window::~Background_Window()
-{
-
-}
+Background_Window::~Background_Window(){}
 
 void Background_Window::background_continue()
 {
@@ -385,11 +372,54 @@ void Background_Window::background_continue()
 }
 
 
+CluesWindow::CluesWindow(Menu m): box(Gtk::ORIENTATION_VERTICAL)
+{
+    resize(100,100);
+    this->set_border_width(60);
+    set_title("Clues Information");
+    set_position(Gtk::WIN_POS_CENTER);
+
+    add(box);
+    Gtk::Frame Frame_LineWrapped;
+
+    label.set_text(m.c1.getClue(0));
+    box.pack_start(label);
+
+    label2.set_text(m.c1.getClue(1));
+    box.pack_start(label2);
+
+    label3.set_text(m.c1.getClue(2));
+    box.pack_start(label3);
+
+    label4.set_text(m.c1.getClue(3));
+    box.pack_start(label4);
+
+    label5.set_text(m.c1.getClue(4));
+    box.pack_start(label5);
+
+    continueButton.add_label("Continue");
+    continueButton.signal_clicked().connect(sigc::mem_fun(*this,&CluesWindow::cluesContinue));
+    box.pack_start(continueButton);
+
+    show_all_children();
+}
+
+CluesWindow::~CluesWindow(){}
+
+void CluesWindow::cluesContinue()
+{
+    hide();
+}
+
+
+
+
 Exit_Correct::Exit_Correct(Menu m): solved_box(Gtk::ORIENTATION_VERTICAL)
 {
     set_size_request(100,100);
     this->set_border_width(60);
     set_title("Exit Page");
+    set_position(Gtk::WIN_POS_CENTER);
 
     add(solved_box);
 
@@ -409,13 +439,10 @@ Exit_Correct::Exit_Correct(Menu m): solved_box(Gtk::ORIENTATION_VERTICAL)
     show_all_children();
 }
 
-Exit_Correct::~Exit_Correct()
-{
-}
+Exit_Correct::~Exit_Correct(){}
 
 void Exit_Correct::home_page()
 {
-    //call to signal_clicked to welcome menu
     hide();
 }
 
@@ -425,6 +452,7 @@ Exit_Incorrect::Exit_Incorrect(Menu m): unsolved_box(Gtk::ORIENTATION_VERTICAL)
     set_size_request(100,100);
     this->set_border_width(60);
     set_title("Exit Page");
+    set_position(Gtk::WIN_POS_CENTER);
 
     add(unsolved_box);
 
@@ -451,9 +479,7 @@ Exit_Incorrect::~Exit_Incorrect()
 
 void Exit_Incorrect::home_page()
 {
-    //call to signal_clicked to welcome menu
     hide();
-    //return main();
 }
 
 Rules::Rules(Menu m)
@@ -463,6 +489,7 @@ Rules::Rules(Menu m)
     set_size_request(700, 200);
     set_title("Mystery Murder Game");
     set_border_width(5);
+    set_position(Gtk::WIN_POS_CENTER);
 
     add(m_HBox);
 
@@ -486,11 +513,6 @@ Rules::~Rules()
 
 void	Rules::send_value()
 {
-	/*std::string	input=entry.get_text();
-	Gtk::MessageDialog dialog (*this, "VOID NO NEW WINDOW ",false,Gtk::MESSAGE_ERROR);
-	dialog.set_secondary_text("NEED TO LINK NEW WINDOW");
-	dialog.run();*/
-
     hide();
     Background_Window story;
     Gtk::Main::run(story);
@@ -499,47 +521,59 @@ void	Rules::send_value()
 Loop :: Loop(Gtk::Main app)
 {
     while(true){
-    Menu m1;
+        Menu m1;
 
-    int life=0;
-    bool s=false;
+        int life=0;
+        bool s=false;
 
-    welcome_window wind;
-    Gtk::Main::run(wind);
+        welcome_window wind;
+        Gtk::Main::run(wind);
 
-    Rules rules(m1);
-    Gtk::Main::run(rules);
+        Rules rules(m1);
+        Gtk::Main::run(rules);
 
-    SuspectWindow window(m1);
-    Gtk::Main::run(window);
+        CluesWindow c(m1);
+        Gtk::Main::run(c);
 
-    s=window.solved;
-    life++;
+        SuspectWindow window(m1);
+        Gtk::Main::run(window);
 
-    if(life<3 && !s)
-    {
-        SuspectWindow win(m1);
-        Gtk::Main::run(win);
-
-        s=win.solved;
-        life++;
-    }
-
-    if(life<3 && !s)
-    {
-        SuspectWindow w(m1);
-        Gtk::Main::run(w);
-
-        s=w.solved;
+        s=window.solved;
         life++;
 
-        Exit_Incorrect e(m1);
-        Gtk::Main::run(e);
+        if(life<3 && !s)
+        {
+            CluesWindow c2(m1);
+            Gtk::Main::run(c2);
+
+            SuspectWindow win(m1);
+            Gtk::Main::run(win);
+
+            s=win.solved;
+            life++;
+        }
+
+        if(life<3 && !s)
+        {
+            CluesWindow c3(m1);
+            Gtk::Main::run(c3);
+            SuspectWindow w(m1);
+            Gtk::Main::run(w);
+
+            s=w.solved;
+            life++;
+        }
+
+        if(s)
+        {
+            Exit_Correct e1(m1);
+            Gtk::Main::run(e1);
+        }
+        else
+        {
+            Exit_Incorrect e(m1);
+            Gtk::Main::run(e);
+        }
     }
-    else
-    {
-        Exit_Correct e1(m1);
-        Gtk::Main::run(e1);
-    }}
 }
 Loop :: ~Loop(){}
