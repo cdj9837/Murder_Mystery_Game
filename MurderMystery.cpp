@@ -7,12 +7,12 @@
 
 using namespace std;
 
-Menu::Menu() //Welcome window in this function
+Menu::Menu()
 {
-        gamePlay();
+    gamePlay();
 }
 
-void Menu :: gamePlay() //Rules window in this function
+void Menu :: gamePlay()
 {
     cs.setCharacters();
     int life=0, suspectNum, weaponNum;
@@ -96,7 +96,6 @@ string CaseStory :: getHowToPlay()
 
 string CaseStory :: getBackStory()
 {
-    //print casestory
     ifstream File("backstory.txt");
     string line, ret;
 
@@ -116,8 +115,8 @@ string CaseStory :: getBackStory()
 
 void CaseStory :: setCharacters()
 {
-    Person Bridgette("Bridgette Gotti");
-    Person Dan("Dan Gillick");
+  Person Bridgette("Bridgette Gotti");
+  Person Dan("Dan Gillick");
 	Person Johnny("Johnny Tightlips");
 	Person Frank("Frankie Squealer");
 	Person Joey("Joey Calabrese");
@@ -129,10 +128,10 @@ void CaseStory :: setCharacters()
 	Bridgette.setMurderer(false);
 
 	characters.push_back(Bridgette);
-    characters.push_back(Dan);
-    characters.push_back(Johnny);
-    characters.push_back(Frank);
-    characters.push_back(Joey);
+  characters.push_back(Dan);
+  characters.push_back(Johnny);
+  characters.push_back(Frank);
+  characters.push_back(Joey);
 }
 
 Person CaseStory :: getCharacter(int characterNum)
@@ -161,10 +160,30 @@ string Person :: getName()
 
 SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 {
-    set_position(Gtk::WIN_POS_CENTER);
-    set_border_width(10);
-    add(box);
 
+    Gtk::Frame Frame_LineWrapped;
+
+    label.set_text(m.c1.getClue(0));
+    box.pack_start(label);
+
+    label2.set_text(m.c1.getClue(1));
+    box.pack_start(label2);
+
+    label3.set_text(m.c1.getClue(2));
+    box.pack_start(label3);
+
+    label4.set_text(m.c1.getClue(3));
+    box.pack_start(label4);
+
+    label5.set_text(m.c1.getClue(4));
+    box.pack_start(label5);
+
+    s_label.set_text("\n");
+    box.pack_start(s_label);
+
+    set_border_width(10);
+
+    add(box);
     suspect.set("Suspect.png");
     box.pack_start(suspect);
 
@@ -289,26 +308,23 @@ void SuspectWindow::onButtonClickedNotMurderWeapon()
     close();
 }
 
-//welcome window functions
+
 welcome_window::welcome_window()
 {
-    //set images
     image.set("image.jpg");
     image2.set("play1.png");
     image3.set("cancel.png");
 
-    resize(800,600);     //size of window
-    set_border_width(10); //window border
-    set_position(Gtk::WIN_POS_CENTER); //WINDOW POSITION IN THE CENTER OF SCREEN
+    resize(800,600);
+    set_border_width(10);
+    set_position(Gtk::WIN_POS_CENTER);
 
-    set_title("Murder Mystery"); //window title
+    set_title("Murder Mystery");
 
-    //play button
     play1.set_size_request(80, 32);
     play1.set_image(image2);
     play1.signal_clicked().connect(sigc::mem_fun(*this,&welcome_window::PlaySignal));
 
-    //exit button
     exit1.set_size_request(80,32);
     exit1.set_image(image3);
     exit1.signal_clicked().connect(sigc::mem_fun(*this,&welcome_window::ExitSignal));
@@ -348,7 +364,7 @@ Background_Window::Background_Window(): box(Gtk::ORIENTATION_VERTICAL)
     add(box);
     Gtk::Frame Frame_LineWrapped;
 
-    label.set_text("Scene Incident Report: You arrive at the crime scene (1400 hours) \non 123 Bourbon Street. At 1200 hours, the complaintant, Bridgette Gotti, \ncontacted the 911 operator and requested immediate medical assistance upon the \ndiscovery of a deceased individual inside her employers' household. Upon arrival at the crime scene, \nthe homicide unit has detained five suspects, including Ms. Gotti, \nfor interrogation. At 1700 hours, the homicide unit has obtained evidence and clues at the crime scene. \nAt 2100 hours, interrogation of the five suspects were completed.\n\n");
+    label.set_text("Scene Incident Report:\n\nYou arrive at the crime scene (1400 hours) on 123 Bourbon Street.\n\nAt 1200 hours, the complaintant, Bridgette Gotti, contacted the 911 operator and requested immediate medical assistance\nupon the discovery of a deceased individual inside her employers' household.\n\nUpon arrival at the crime scene, the homicide unit has detained five suspects, including Ms. Gotti, for interrogation.\n\nAt 1700 hours, the homicide unit has obtained evidence and clues at the crime scene.\n\nAt 2100 hours, interrogation of the five suspects were completed.\n\n");
     box.pack_start(label);
 
     back_image.set("location.png");
@@ -370,48 +386,6 @@ void Background_Window::background_continue()
 {
     hide();
 }
-
-
-CluesWindow::CluesWindow(Menu m): box(Gtk::ORIENTATION_VERTICAL)
-{
-    resize(100,100);
-    this->set_border_width(60);
-    set_title("Clues Information");
-    set_position(Gtk::WIN_POS_CENTER);
-
-    add(box);
-    Gtk::Frame Frame_LineWrapped;
-
-    label.set_text(m.c1.getClue(0));
-    box.pack_start(label);
-
-    label2.set_text(m.c1.getClue(1));
-    box.pack_start(label2);
-
-    label3.set_text(m.c1.getClue(2));
-    box.pack_start(label3);
-
-    label4.set_text(m.c1.getClue(3));
-    box.pack_start(label4);
-
-    label5.set_text(m.c1.getClue(4));
-    box.pack_start(label5);
-
-    continueButton.add_label("Continue");
-    continueButton.signal_clicked().connect(sigc::mem_fun(*this,&CluesWindow::cluesContinue));
-    box.pack_start(continueButton);
-
-    show_all_children();
-}
-
-CluesWindow::~CluesWindow(){}
-
-void CluesWindow::cluesContinue()
-{
-    hide();
-}
-
-
 
 
 Exit_Correct::Exit_Correct(Menu m): solved_box(Gtk::ORIENTATION_VERTICAL)
@@ -483,13 +457,16 @@ void Exit_Incorrect::home_page()
 }
 
 Rules::Rules(Menu m)
-: m_HBox(Gtk::ORIENTATION_VERTICAL, 5), m_VBox2(Gtk::ORIENTATION_VERTICAL, 5), m_Frame_LineWrapped("***GAME RULES***")
+: m_VBox2(Gtk::ORIENTATION_VERTICAL, 5), m_Frame_LineWrapped("***GAME RULES***")
 , button_send("Continue")
 {
     set_size_request(700, 200);
     set_title("Mystery Murder Game");
     set_border_width(5);
     set_position(Gtk::WIN_POS_CENTER);
+
+    image.set("McGruff.png");
+    m_HBox.pack_start(image);
 
     add(m_HBox);
 
@@ -502,7 +479,7 @@ Rules::Rules(Menu m)
 
     button_send.signal_clicked().connect(sigc::mem_fun(*this,
     &Rules::send_value));
-    m_HBox.pack_start(button_send);
+    m_VBox2.pack_start(button_send);
 
     show_all_children();
 }
@@ -532,9 +509,6 @@ Loop :: Loop(Gtk::Main app)
         Rules rules(m1);
         Gtk::Main::run(rules);
 
-        CluesWindow c(m1);
-        Gtk::Main::run(c);
-
         SuspectWindow window(m1);
         Gtk::Main::run(window);
 
@@ -543,9 +517,6 @@ Loop :: Loop(Gtk::Main app)
 
         if(life<3 && !s)
         {
-            CluesWindow c2(m1);
-            Gtk::Main::run(c2);
-
             SuspectWindow win(m1);
             Gtk::Main::run(win);
 
@@ -555,8 +526,6 @@ Loop :: Loop(Gtk::Main app)
 
         if(life<3 && !s)
         {
-            CluesWindow c3(m1);
-            Gtk::Main::run(c3);
             SuspectWindow w(m1);
             Gtk::Main::run(w);
 
