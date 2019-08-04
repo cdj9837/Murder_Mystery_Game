@@ -107,6 +107,7 @@ void send_value();
   Gtk::Frame m_Frame_LineWrapped;
   Gtk::Label m_Label_LineWrapped;
   Gtk::Button	button_send;
+  Gtk::Image image;
 
 };
 
@@ -118,6 +119,7 @@ protected:
     Gtk::Image suspect, weapons;
 
     Gtk::Button s1, s2, s3, s4, s5, w1, w2, w3, w4, w5;
+    Gtk::Label label, label2, label3, label4, label5,s_label;
 
     Gtk::Grid sGrid, wGrid;
 
@@ -152,21 +154,6 @@ class Background_Window: public Gtk::Window
       Gtk::Button continue_button;
       Gtk::Label label;
       Gtk::Label label1;
-};
-
-class CluesWindow : public Gtk::Window
-{
-    public:
-      CluesWindow(Menu m);
-      virtual ~CluesWindow();
-
-    protected:
-      void cluesContinue();
-
-      Gtk::Box box;
-
-      Gtk::Button continueButton;
-      Gtk::Label label, label2, label3, label4, label5;
 };
 
 class Exit_Correct: public Gtk::Window
