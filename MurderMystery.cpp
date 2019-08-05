@@ -161,6 +161,7 @@ string Person :: getName()
 SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 {
 
+    set_position(Gtk::WIN_POS_CENTER);
     Gtk::Frame Frame_LineWrapped;
 
     label.set_text(m.c1.getClue(0));
