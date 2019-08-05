@@ -35,11 +35,11 @@ Case Case::main_menu_case(Case g)
 	g.setWeapon(weapon4);
 	g.setWeapon(weapon5);
 
-	string clue1 = "Dan Gillick is very thin, and physically weak, his hands are not rough...";
-	string clue2 = "Johnny Tightlips is physically build, his hands are pretty rough as a farmer...";
-	string clue3 = "small traces of blood found on Joey Calabrese shirt cuffs...";
-	string clue4 = "various drill bits found in Frankie Squealer toolbox, when checking his car";
-	string clue5 = "small traces of black carbon found on Bridgette Gotti hands";
+	string clue1 = "Clue 1: Dan Gillick is very thin, and physically weak, his hands are not rough.\n";
+	string clue2 = "Clue 2: Johnny Tightlips is physically build, his hands are pretty rough as a farmer.\n";
+	string clue3 = "Clue 3: Small traces of blood found on Joey Calabrese shirt cuffs.\n";
+	string clue4 = "Clue 4: A receipt from a hardware store was found in Frankie Squealer's car.\nThe receipt indicates that he bought a dagger.\n";
+	string clue5 = "Clue 5: Small traces of black carbon found on Bridgette Gotti hands.\n";
 
 	g.setClue(clue1);
 	g.setClue(clue2);
@@ -89,7 +89,7 @@ string CaseStory :: getHowToPlay()
     while(!instructions.eof())
     {
         getline(instructions, line);
-        ret=ret+line+"\n";
+        ret=ret+line+"\n\n";
     }
     return ret;
 }
@@ -160,15 +160,15 @@ string Person :: getName()
 
 SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 {
-
+    set_size_request(600,600);
     set_position(Gtk::WIN_POS_CENTER);
     Gtk::Frame Frame_LineWrapped;
 
     label.set_text(m.c1.getClue(0));
-    box.pack_start(label);
+    box.pack_start(label,0,0);
 
     label2.set_text(m.c1.getClue(1));
-    box.pack_start(label2);
+    box.pack_start(label2,0,0);
 
     label3.set_text(m.c1.getClue(2));
     box.pack_start(label3);
@@ -186,10 +186,35 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 
     add(box);
 
-    alibi.add_label("Alibi");
-    box.pack_start(alibi);
-    alibi.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onAlibiClicked));
+    ab1.add_label("Bridgette");
+    ab1.set_size_request(80,32);
+    hbox.pack_start(ab1);
+    ab1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab1_clicked));
 
+    ab2.add_label("Dan");
+    ab2.set_size_request(80,32);
+    hbox.pack_start(ab2);
+    ab2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab2_clicked));
+
+    ab3.add_label("Johnny");
+    ab3.set_size_request(80,32);
+    hbox.pack_start(ab3);
+    ab3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab3_clicked));
+
+    ab4.add_label("Frank");
+    ab4.set_size_request(80,32);
+    hbox.pack_start(ab4);
+    ab4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab4_clicked));
+
+    ab5.add_label("Joey");
+    ab5.set_size_request(80,32);
+    hbox.pack_start(ab5);
+    ab5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab5_clicked));
+
+    box.pack_start(hbox);
+
+    label_space.set_text("\n");
+    box.pack_start(label_space);
 
     suspect.set("Suspect.png");
     box.pack_start(suspect);
@@ -226,10 +251,46 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 
 SuspectWindow::~SuspectWindow(){}
 
-void SuspectWindow :: onAlibiClicked()
+void SuspectWindow :: ab1_clicked()
 {
-    Gtk::MessageDialog dialog(*this, "TEST ALIBI!", false, Gtk::MESSAGE_INFO);
-    dialog.set_secondary_text("TEST ALIBI");
+    Gtk::MessageDialog dialog(*this, "Bridgette Gotti's Alibi", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("I think Joey did it.\nI saw her last time talking to Joey downstairs about something.\nI was in my office writing up Joey's insurance risk documents until I heard a scream.");
+    dialog.run();
+
+    close();
+}
+
+void SuspectWindow :: ab2_clicked()
+{
+    Gtk::MessageDialog dialog(*this, "Dan Gillick's Alibi", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("I was seeing a basketball game in the city at that time.\nI only met her once and I think Johnny Tightlips was there after I finished up my shift.");
+    dialog.run();
+
+    close();
+}
+
+void SuspectWindow :: ab3_clicked()
+{
+    Gtk::MessageDialog dialog(*this, "Johnny Tightlips's Alibi", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("There are three sides to every story.\nMine, yours, and the truth.\n\"I ain't sayin' nothing'!\"");
+    dialog.run();
+
+    close();
+}
+
+void SuspectWindow :: ab4_clicked()
+{
+    Gtk::MessageDialog dialog(*this, "Frankie Squealer's Alibi", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("I think Dan did it. He told me he had taken an interest in her about dating.\nI'm pretty sure the last time I saw her, they were talking at the bottom of the stairs.");
+    dialog.run();
+
+    close();
+}
+
+void SuspectWindow :: ab5_clicked()
+{
+    Gtk::MessageDialog dialog(*this, "Joey Calabrese's Alibi", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("I was present there at the time.\nI heard a knife sharpening sound and then I heard a scream.");
     dialog.run();
 
     close();
@@ -493,6 +554,9 @@ Rules::Rules(Menu m)
     m_Frame_LineWrapped.add(m_Label_LineWrapped);
     m_VBox2.pack_start(m_Frame_LineWrapped, Gtk::PACK_SHRINK);
 
+    label_space.set_text("\n");
+    m_VBox2.pack_start(label_space);
+
     button_send.signal_clicked().connect(sigc::mem_fun(*this,
     &Rules::send_value));
     m_VBox2.pack_start(button_send);
@@ -531,7 +595,7 @@ Loop :: Loop(Gtk::Main app)
         s=window.solved;
         life++;
 
-        if(life<3 && !s)
+        if(life<5 && !s)
         {
             SuspectWindow win(m1);
             Gtk::Main::run(win);
@@ -540,7 +604,25 @@ Loop :: Loop(Gtk::Main app)
             life++;
         }
 
-        if(life<3 && !s)
+        if(life<5 && !s)
+        {
+            SuspectWindow w(m1);
+            Gtk::Main::run(w);
+
+            s=w.solved;
+            life++;
+        }
+
+        if(life<5 && !s)
+        {
+            SuspectWindow w(m1);
+            Gtk::Main::run(w);
+
+            s=w.solved;
+            life++;
+        }
+
+        if(life<5 && !s)
         {
             SuspectWindow w(m1);
             Gtk::Main::run(w);
