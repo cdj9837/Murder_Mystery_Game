@@ -118,7 +118,7 @@ protected:
     Gtk::Box box, hello2;
     Gtk::Image suspect, weapons;
 
-    Gtk::Button s1, s2, s3, s4, s5, w1, w2, w3, w4, w5;
+    Gtk::Button s1, s2, s3, s4, s5, w1, w2, w3, w4, w5, alibi;
     Gtk::Label label, label2, label3, label4, label5,s_label;
 
     Gtk::Grid sGrid, wGrid;
@@ -127,6 +127,7 @@ protected:
     void onButtonClicked();
     void onButtonClickedMurder();
     void onButtonClickedNotMurder();
+    void onAlibiClicked();
 
     void onButtonClickedMurderNotWeapon();
     void onButtonClickedNotMurderWeapon();

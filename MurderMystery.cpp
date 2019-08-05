@@ -184,6 +184,12 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
     set_border_width(10);
 
     add(box);
+
+    alibi.add_label("Alibi");
+    box.pack_start(alibi);
+    alibi.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onAlibiClicked));
+
+
     suspect.set("Suspect.png");
     box.pack_start(suspect);
 
@@ -218,6 +224,15 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 };
 
 SuspectWindow::~SuspectWindow(){}
+
+void SuspectWindow :: onAlibiClicked()
+{
+    Gtk::MessageDialog dialog(*this, "TEST ALIBI!", false, Gtk::MESSAGE_INFO);
+    dialog.set_secondary_text("TEST ALIBI");
+    dialog.run();
+
+    close();
+}
 
 void SuspectWindow::onButtonClickedMurder()
 {
