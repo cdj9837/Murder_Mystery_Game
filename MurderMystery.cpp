@@ -186,6 +186,9 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
 
     add(box);
 
+    Alibi.set_text("Click to see Alibi's");
+    box.pack_start(Alibi);
+
     ab1.add_label("Bridgette");
     ab1.set_size_request(80,32);
     hbox.pack_start(ab1);
@@ -257,7 +260,7 @@ void SuspectWindow :: ab1_clicked()
     dialog.set_secondary_text("I think Joey did it.\nI saw her last time talking to Joey downstairs about something.\nI was in my office writing up Joey's insurance risk documents until I heard a scream.");
     dialog.run();
 
-    close();
+    hide();
 }
 
 void SuspectWindow :: ab2_clicked()
