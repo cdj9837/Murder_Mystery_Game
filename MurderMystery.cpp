@@ -190,7 +190,6 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
     box.pack_start(alibi);
     alibi.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::onAlibiClicked));
 
-
     suspect.set("Suspect.png");
     box.pack_start(suspect);
 
