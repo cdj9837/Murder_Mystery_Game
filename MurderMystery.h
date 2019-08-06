@@ -105,7 +105,7 @@ void send_value();
   Gtk::Box m_VBox2;
   Gtk::Entry entry;
   Gtk::Frame m_Frame_LineWrapped;
-  Gtk::Label m_Label_LineWrapped;
+  Gtk::Label m_Label_LineWrapped, label_space;
   Gtk::Button	button_send;
   Gtk::Image image;
 
@@ -116,10 +116,11 @@ class SuspectWindow : public Gtk::Window
 protected:
 
     Gtk::Box box, hello2;
+    Gtk::HBox hbox;
     Gtk::Image suspect, weapons;
 
-    Gtk::Button s1, s2, s3, s4, s5, w1, w2, w3, w4, w5, alibi;
-    Gtk::Label label, label2, label3, label4, label5,s_label;
+    Gtk::Button s1, s2, s3, s4, s5, w1, w2, w3, w4, w5, ab1, ab2, ab3, ab4, ab5;
+    Gtk::Label label, label2, label3, label4, label5, s_label, label_space;
 
     Gtk::Grid sGrid, wGrid;
 
@@ -128,6 +129,11 @@ protected:
     void onButtonClickedMurder();
     void onButtonClickedNotMurder();
     void onAlibiClicked();
+    void ab1_clicked();
+    void ab2_clicked();
+    void ab3_clicked();
+    void ab4_clicked();
+    void ab5_clicked();
 
     void onButtonClickedMurderNotWeapon();
     void onButtonClickedNotMurderWeapon();
