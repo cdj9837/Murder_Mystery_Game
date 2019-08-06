@@ -68,11 +68,6 @@ string Case :: getClue(int clueNum)
     return clues[clueNum];
 }
 
-string Case :: getWeapon(int weaponNum)
-{
-    return weaponList[weaponNum];
-}
-
 string CaseStory :: getHowToPlay()
 {
     ifstream instructions("instructions.txt");
@@ -90,25 +85,6 @@ string CaseStory :: getHowToPlay()
     {
         getline(instructions, line);
         ret=ret+line+"\n\n";
-    }
-    return ret;
-}
-
-string CaseStory :: getBackStory()
-{
-    ifstream File("backstory.txt");
-    string line, ret;
-
-    if(!File.is_open())
-    {
-        cout<<"Could not open file"<<endl;
-        exit(1);
-    }
-
-    while(!File.eof())
-    {
-        getline(File, line);
-        ret= ret+line+"\n";
     }
     return ret;
 }
@@ -189,27 +165,27 @@ SuspectWindow::SuspectWindow(Menu m) : box(Gtk::ORIENTATION_VERTICAL)
     Alibi.set_text("Click to see Alibi's");
     box.pack_start(Alibi);
 
-    ab1.add_label("Bridgette");
+    ab1.add_label(m.cs.getCharacter(1).getName());
     ab1.set_size_request(80,32);
     hbox.pack_start(ab1);
     ab1.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab1_clicked));
 
-    ab2.add_label("Dan");
+    ab2.add_label(m.cs.getCharacter(2).getName());
     ab2.set_size_request(80,32);
     hbox.pack_start(ab2);
     ab2.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab2_clicked));
 
-    ab3.add_label("Johnny");
+    ab3.add_label(m.cs.getCharacter(3).getName());
     ab3.set_size_request(80,32);
     hbox.pack_start(ab3);
     ab3.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab3_clicked));
 
-    ab4.add_label("Frank");
+    ab4.add_label(m.cs.getCharacter(4).getName());
     ab4.set_size_request(80,32);
     hbox.pack_start(ab4);
     ab4.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab4_clicked));
 
-    ab5.add_label("Joey");
+    ab5.add_label(m.cs.getCharacter(5).getName());
     ab5.set_size_request(80,32);
     hbox.pack_start(ab5);
     ab5.signal_clicked().connect(sigc::mem_fun(*this, &SuspectWindow::ab5_clicked));

@@ -29,7 +29,6 @@ class CaseStory
     vector<Person> characters;
  public:
     string getHowToPlay();
-    string getBackStory();
     void setCharacters();
     Person getCharacter(int characterNum);
 };
@@ -45,7 +44,6 @@ class Case : public CaseStory
     void setWeapon(string weapon);
     void setSolved(bool solved);
     string getClue(int clueNum);
-    string getWeapon(int weaponNum);
     Case main_menu_case(Case g);
 };
 
@@ -53,8 +51,6 @@ class Menu
 {
     int choice;
 public:
-    int getChoice();
-    string guess_suspect, guess_weapon;
     Menu();
     CaseStory cs;
     Case c1;
@@ -62,12 +58,6 @@ public:
     void gamePlay();
 
     friend class SuspectWindow;
-    friend class ExampleWindow;
-
-    friend class Background_Window;
-    friend class Exit_Correct;
-    friend class Exit_Incorrect;
-
 };
 
 class welcome_window : public Gtk::Window
