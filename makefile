@@ -10,7 +10,7 @@ main.o: main.cpp MurderMystery.h
 MurderMystery.o: MurderMystery.h MurderMystery.cpp
 	$(CXX) $(CXXFLAGS) -c MurderMystery.cpp $(GTKFLAGS)
 	
-cleanup:
+clean:
 	echo "Cleaning up object files and executable!"
 	rm *.o
 	rm murder
